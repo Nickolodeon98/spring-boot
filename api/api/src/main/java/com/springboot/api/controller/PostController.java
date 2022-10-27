@@ -1,8 +1,9 @@
 package com.springboot.api.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import com.springboot.api.domain.dto.MemberDto;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 
 @RestController
@@ -12,5 +13,21 @@ public class PostController {
     @RequestMapping(value="/domain", method= RequestMethod.POST)
     public String postExample() {
         return "Hello POST Api";
+    }
+
+    @PostMapping(value="/member")
+    public String postArbitraryParam(@RequestBody Map<String, Object> postData) {
+        StringBuilder sb = new StringBuilder();
+
+        postData.entrySet().forEach(map->{
+            sb.append(map.getKey() + " : " + map.getValue() + "\n");
+        });
+
+        return sb.toString();
+    }
+
+    @PostMapping("/member2")
+    public String postArbitraryParamWithDto(@RequestBody MemberDto memberDto) {
+        return memberDto.toString();
     }
 }
